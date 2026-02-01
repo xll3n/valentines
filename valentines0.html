@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allen & Shanice 💖 Forever Love</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset & body */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;overflow-x:hidden;background:#ffe6f0;position:relative;}
+
+/* Navbar */
+nav{position:fixed;top:0;width:100%;background:rgba(255,105,180,0.95);backdrop-filter:blur(15px);z-index:100;padding:15px 0;}
+nav ul{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;}
+nav li{margin:0 15px;}
+nav a{text-decoration:none;color:white;font-weight:600;font-size:1.2em;font-family:'Dancing Script',cursive;transition:all 0.4s;}
+nav a:hover{transform:translateY(-3px) scale(1.1);text-shadow:0 0 20px #ffd700;}
+
+/* Sections */
+section{padding:100px 20px;min-height:100vh;opacity:0;transform:translateY(60px);transition: all 1s;position:relative;}
+section.active{opacity:1;transform:translateY(0);}
+
+/* Hero */
+.hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;}
+.hero h1{font-size:clamp(3em,10vw,6em);font-family:'Dancing Script',cursive;background:linear-gradient(45deg,#ff1493,#ff69b4,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:titleHeartbeat 3s ease-in-out infinite;margin-bottom:25px;}
+@keyframes titleHeartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.subtitle{font-size:2em;color:#ff1493;font-family:'Dancing Script',cursive;margin-bottom:50px;}
+
+/* Buttons */
+.buttons{display:flex;gap:25px;flex-wrap:wrap;justify-content:center;position:relative;}
+.btn{padding:20px 40px;font-size:1.5em;border:none;border-radius:50px;cursor:pointer;position:relative;overflow:hidden;font-weight:600;font-family:'Poppins',sans-serif;transition:all 0.3s;box-shadow:0 10px 40px rgba(255,105,180,0.4);}
+.btn:hover{transform:translateY(-8px) scale(1.08);box-shadow:0 20px 50px rgba(255,105,180,0.6);}
+.btn-yes{background:linear-gradient(135deg,#ff69b4,#ff1493);color:white;}
+.btn-no{background:linear-gradient(135deg,#ff4444,#ff6666);color:white;position:absolute;}
+.btn-music{background:linear-gradient(135deg,#dda0dd,#e6e6fa);color:#ff1493;}
+
+/* Love Letter */
+.love-letter{line-height:1.8;font-size:1.25em;color:#333;font-family:'Dancing Script',cursive;position:relative;background:rgba(255,255,255,0.95);padding:40px;border-radius:20px;box-shadow:0 10px 30px rgba(255,105,180,0.3);}
+.love-letter h3{color:#ff1493;font-size:2em;margin:30px 0 20px;text-align:center;text-shadow:0 2px 10px rgba(255,20,147,0.3);position:relative;}
+.love-letter p{margin-bottom:20px;text-align:justify;}
+
+/* Music Player */
+#musicPlayer{background:linear-gradient(135deg, rgba(255,192,203,0.95), rgba(255,105,180,0.95));padding:20px;border-radius:30px;box-shadow:0 15px 40px rgba(255,20,147,0.4);margin-top:30px;}
+.playlist button{background:rgba(255,255,255,0.8);border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:0.9em;margin-right:5px;}
+.playlist button.active{background:#ffd700;color:#ff1493;}
+
+/* Photo Gallery */
+#photoGallery img{margin:5px;border-radius:20px;width:150px;height:150px;object-fit:cover;}
+
+/* Movie List */
+#movieList li{margin:5px 0;}
+
+/* Celebration */
+#celebration{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;display:none;z-index:9999;}
+
+/* Back Button */
+.back-btn{display:inline-block;margin-top:30px;padding:10px 20px;background:#ff69b4;color:white;border-radius:20px;cursor:pointer;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+<ul>
+<li><a href="#home" onclick="showSection('home')">🏠 Home</a></li>
+<li><a href="#music" onclick="showSection('music')">🎵 Music</a></li>
+<li><a href="#photos" onclick="showSection('photos')">📸 Photos</a></li>
+<li><a href="#movies" onclick="showSection('movies')">🎬 Movies</a></li>
+<li><a href="#letter" onclick="showSection('letter')">💌 Letter</a></li>
+</ul>
+</nav>
+
+<!-- Hero -->
+<section id="home" class="hero active">
+<h1>Allen & Shanice 💖</h1>
+<p class="subtitle" id="typewriter"></p>
+<div class="buttons">
+<button class="btn btn-yes" onclick="yesAction()">Yes Forever 😍💕</button>
+<button class="btn btn-no" id="noBtn">No Way 😢</button>
+<button class="btn btn-music" onclick="showSection('music')">🎵 Our Songs</button>
+</div>
+<div id="timer" style="margin-top:30px; font-size:2em; color:#ff1493;"></div>
+</section>
+
+<!-- Music Section -->
+<section id="music">
+<div class="love-letter">
+<h3>🎵 Our Love Songs Playlist</h3>
+<div id="musicPlayer">
+<div id="currentSong">Choose your favorite song ✨</div>
+<div class="playlist" id="playlist"></div>
+</div>
+<div class="back-btn" onclick="showSection('home')">Back Home 🏠</div>
+</div>
+</section>
+
+<!-- Photos Section -->
+<section id="photos">
+<div class="love-letter">
+<h3>📸 Upload Photos</h3>
+<input type="file" id="photoUpload" multiple accept="image/*">
+<div id="photoGallery"></div>
+<div class="back-btn" onclick="showSection('home')">Back Home 🏠</div>
+</div>
+</section>
+
+<!-- Movies Section -->
+<section id="movies">
+<div class="love-letter">
+<h3>🎬 Our Movie List</h3>
+<input type="text" id="movieInput" placeholder="Add a movie">
+<button onclick="addMovie()">Add Movie</button>
+<ul id="movieList"></ul>
+<div class="back-btn" onclick="showSection('home')">Back Home 🏠</div>
+</div>
+</section>
+
+<!-- Letter Section -->
+<section id="letter">
+<div class="love-letter">
+<h3>💌 My Heartfelt Letter to Shanice 💖</h3>
+<p>Shanice, every moment we’ve shared—even through screens—has made me feel a love I never imagined. Your laughter, your words, your heart—they brighten my days and fill my dreams.</p>
+<p>I can’t wait to finally hold your hand, share our smiles, and build our memories together. Until then, know that you are always in my thoughts, my heart, and every beat I take.</p>
+<p style="text-align:center; font-size:1.5em; color:#ff1493;">Forever yours, Allen 💖✨</p>
+<div class="back-btn" onclick="showSection('home')">Back Home 🏠</div>
+</div>
+</section>
+
+<!-- Celebration Layer -->
+<div id="celebration"></div>
+
+<script>
+// ===== NO Button Movement inside viewport =====
+const noBtn=document.getElementById('noBtn');
+const btnWidth=150; // approx button width
+const btnHeight=60; // approx button height
+noBtn.addEventListener('mousemove',(e)=>{
+let padding=10; // distance from edges
+let maxX=window.innerWidth-btnWidth-padding;
+let maxY=window.innerHeight-btnHeight-padding;
+let x=Math.random()*maxX;
+let y=Math.random()*maxY;
+noBtn.style.left=x+'px';
+noBtn.style.top=y+'px';
+});
+
+// ===== Countdown =====
+const specialDate=new Date("2026-02-14T00:00:00").getTime();
+const timerEl=document.getElementById('timer');
+setInterval(()=>{
+let now=new Date().getTime();
+let distance=specialDate-now;
+if(distance<=0){timerEl.textContent="🎉 Today is our special day! 💖";return;}
+let d=Math.floor(distance/(1000*60*60*24));
+let h=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((distance%(1000*60*60))/(1000*60));
+let s=Math.floor((distance%(1000*60))/1000);
+timerEl.textContent=`${d}d ${h}h ${m}m ${s}s`;
+},1000);
+
+// ===== Music Player =====
+const loveSongs=[
+{title:"Perfect - Ed Sheeran"},
+{title:"All of Me - John Legend"},
+{title:"Thinking Out Loud - Ed Sheeran"},
+{title:"Make You Feel My Love - Adele"},
+{title:"A Thousand Years - Christina Perri"},
+{title:"I Will Always Love You - Whitney Houston"},
+{title:"My Heart Will Go On - Celine Dion"},
+{title:"Adore You - Harry Styles"},
+{title:"Shape of You - Ed Sheeran"},
+{title:"Just the Way You Are - Bruno Mars"}
+];
+const audio=new Audio();
+function initMusic(){
+const playlist=document.getElementById('playlist');
+loveSongs.forEach((song,index)=>{
+const btn=document.createElement('button');
+btn.textContent=song.title;
+btn.onclick=()=>playSong(index);
+playlist.appendChild(btn);
+});
+}
+function playSong(index){
+audio.pause();
+// audio.src placeholder
+document.getElementById('currentSong').textContent=`${loveSongs[index].title} 🎵`;
+document.querySelectorAll('.playlist button').forEach((b,i)=>b.classList.toggle('active',i===index));
+}
+
+// ===== Photo Upload =====
+document.getElementById('photoUpload').addEventListener('change',(e)=>{
+const files=e.target.files;
+const gallery=document.getElementById('photoGallery');
+for(let f of files){
+let reader=new FileReader();
+reader.onload=(ev)=>{
+let img=document.createElement('img');
+img.src=ev.target.result;
+gallery.appendChild(img);
+};
+reader.readAsDataURL(f);
+}
+});
+
+// ===== Movie List =====
+function addMovie(){
+const val=document.getElementById('movieInput').value.trim();
+if(val!==''){
+const li=document.createElement('li');
+li.textContent=val;
+document.getElementById('movieList').appendChild(li);
+document.getElementById('movieInput').value='';
+}
+}
+
+// ===== Show Section =====
+function showSection(id){
+document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== Typewriter =====
+function typeWriter(el,text){
+let i=0; el.innerHTML='';
+function type(){ if(i<text.length){ el.innerHTML+=text.charAt(i); i++; setTimeout(type,80); } }
+type();
+}
+
+// ===== YES Action =====
+function yesAction(){
+showSection('home');
+triggerCelebration();
+triggerFloatingEmojis();
+alert('🎉 Shanice said YES! 💖 Time to celebrate! 🎉');
+}
+
+// ===== Celebration =====
+function triggerCelebration(){
+const c=document.getElementById('celebration');
+c.style.display='block';
+let particles=[];
+for(let i=0;i<200;i++){
+let p=document.createElement('div');
+p.className='particle';
+p.innerHTML=['💖','💌','✨','🌟','🎉','🦋'][Math.floor(Math.random()*6)];
+p.style.position='absolute';
+p.style.left=Math.random()*100+'vw';
+p.style.top=Math.random()*100+'vh';
+p.style.fontSize=(15+Math.random()*25)+'px';
+c.appendChild(p);
+particles.push(p);
+}
+setTimeout(()=>{c.innerHTML=''; c.style.display='none';},8000);
+}
+
+// ===== Floating Emojis Mini Game =====
+function triggerFloatingEmojis(){
+const c=document.getElementById('celebration');
+c.style.display='block';
+for(let i=0;i<50;i++){
+let e=document.createElement('div');
+e.style.position='absolute';
+e.style.fontSize=(20+Math.random()*30)+'px';
+e.style.left=Math.random()*100+'vw';
+e.style.top=Math.random()*100+'vh';
+e.style.cursor='pointer';
+e.textContent=['💖','💌','✨','🌟'][Math.floor(Math.random()*4)];
+e.onclick=()=>{alert('You clicked a ❤️!'); e.remove();};
+c.appendChild(e);
+(function animate(el){let x=Math.random()*window.innerWidth; let y=Math.random()*window.innerHeight; el.style.transition='all 3s ease-in-out'; el.style.left=x+'px'; el.style.top=y+'px'; setTimeout(()=>animate(el),3000+Math.random()*2000);})(e);
+}
+}
+
+// ===== Init =====
+window.onload=()=>{
+initMusic();
+typeWriter(document.getElementById('typewriter'), 'My Beautiful Love Forever ✨💕');
+};
+</script>
+</body>
+</html>
